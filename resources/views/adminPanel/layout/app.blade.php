@@ -42,10 +42,12 @@
         <div class="row align-items-center">
             <div class="col-lg-2 header-left col-md-4 col-7">
                 <ul class="list-inline header-socials-2 mb-0 text-center">
-                    <li class="list-inline-item"><a href="#"><i class="ti-facebook"></i></a></li>
-                    <li class="list-inline-item"><a href="#"><i class="ti-twitter"></i></a></li>
-                    <li class="list-inline-item"><a href="#"><i class="ti-linkedin"></i></a></li>
-                    <li class="list-inline-item"><a href="#"><i class="ti-pinterest"></i></a></li>
+                    <!-- Mesajlaşma Butonu -->
+                    @if(Auth::check()) <!-- Kullanıcı giriş yapmış mı kontrol et -->
+                    <a href="{{ route('messages.index') }}" class="btn btn-primary">Messages</a>
+                    @endif
+
+
                     <li class="list-inline-item">
                         <div class="search_toggle mobile-search d-md-block d-lg-none "><i class="ti-search "></i></div>
 
@@ -64,10 +66,7 @@
                         <ul id="menu" class="menu navbar-nav mx-auto ">
                             <li class="nav-item"><a href="{{ url('/home') }}" class="nav-link" style="margin-left: -60px;">Home</a></li>
 
-                            <!-- Mesajlaşma Butonu -->
-                            @if(Auth::check()) <!-- Kullanıcı giriş yapmış mı kontrol et -->
-                            <a href="{{ route('messages.index') }}" class="btn btn-primary">Mesajlar</a>
-                            @endif
+
 
                             <!--    <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -112,12 +111,25 @@
                                 </div>
                             </li> -->
                             <li class="nav-item"><a href="{{ url('/contact') }}" class="nav-link">Contact</a></li>
-                            <li class="nav-item" style="margin-left: auto; margin-left: 30px; list-style: none;">
-                                <a href="{{ url('/login') }}" class="nav-link">Login</a>
-                            </li>
-                            <li class="nav-item" style="margin-left: auto; margin-left: -20px; list-style: none;">
-                                <a href="{{ url('/register') }}" class="nav-link">Register</a>
-                            </li>
+
+                            <!-- Kullanıcı giriş yapmamışsa göster -->
+                            @guest
+                                <li class="nav-item" style="margin-left: auto; margin-left: 30px; list-style: none;">
+                                    <a href="{{ url('/login') }}" class="nav-link">Login</a>
+                                </li>
+                                <li class="nav-item" style="margin-left: auto; margin-left: -20px; list-style: none;">
+                                    <a href="{{ url('/register') }}" class="nav-link">Register</a>
+                                </li>
+                            @endguest
+
+                            <!-- Kullanıcı giriş yapmışsa göster -->
+                            @auth
+                                <li class="nav-item" style="margin-left: auto; list-style: none;">
+                                    <a href="{{ url('/logout') }}" class="nav-link">Logout</a>
+                                </li>
+                                @endauth
+
+                                </li>
                         </ul>
                     </div>
                 </nav>

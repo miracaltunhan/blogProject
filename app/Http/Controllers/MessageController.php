@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Messages;
+use App\Models\Message;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class MessagesController extends Controller
+class MessageController extends Controller
 {
     /**
      * Gönderilmiş mesajları listele.

@@ -7,41 +7,36 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\MessagesController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
 
-// Auth Middleware ile sadece giriş yapmış kullanıcılar erişebilir
 Route::middleware(['auth'])->group(function () {
     // Admin için dashboard yönlendirmesi
     Route::get('/dashboard', function () {
         $user = Auth::user();
         if ($user->hasRole('admin')) {
-            return view('adminPanel.dashboard'); // Admin paneli
+            return view('adminPanel.dashboard');
         }
-        return redirect('/home'); // Diğer kullanıcılar home sayfasına yönlendirilir
+        return redirect('/home');
     })->name('dashboard');
 
-    // Kullanıcı profil sayfası
+
     Route::view('profile', 'profile')->name('profile');
 
-    // Mesajlaşma rotaları
     Route::middleware(['auth'])->group(function () {
-        Route::get('/messages', [MessagesController::class, 'index'])->name('messages');
-        Route::post('/messages/send', [MessagesController::class, 'send'])->name('messages.send');
+            Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+            Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
     });
 
 
-    // Bildirim rotaları
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
     Route::get('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
 });
 
-// Admin rolüne sahip kullanıcılar için blog rotaları
 Route::middleware(['auth', 'role_check:1'])->group(function () {
     Route::resource('blogs', BlogController::class);
 });
 
-// Diğer sayfalar için rotalar
 Route::get('/home', function () {
     return view('adminPanel.layout.app'); // Ana sayfa
 })->name('home');
