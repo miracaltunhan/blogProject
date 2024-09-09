@@ -16,12 +16,18 @@ class RoleCheck
      * @param  string  $role
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, $role)
-    {
-        if (Auth::check() && Auth::user()->role == $role) {
+    public function handle(Request $request, Closure $next)
+    {// Kullanıcı giriş yapmamışsa, role kontrolü yapma
+        if (!Auth::check()) {
+            return $next($request); // Oturum açmamışsa, middleware'i atla
+        }
+
+        // Kullanıcı rolünü kontrol et
+        if (Auth::user()->role == "1") {
             return $next($request);
         }
 
+        // Yanlış rol, home sayfasına yönlendir
         return redirect('/home');
     }
 }

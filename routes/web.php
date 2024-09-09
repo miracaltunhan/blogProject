@@ -33,7 +33,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
 });
 
-Route::middleware(['auth', 'role_check:1'])->group(function () {
+Route::middleware(['auth', 'role_check'])->group(function () {
     Route::resource('blogs', BlogController::class);
 });
 
