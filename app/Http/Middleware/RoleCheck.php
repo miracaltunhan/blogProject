@@ -17,7 +17,9 @@ class RoleCheck
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
-    {// Kullanıcı giriş yapmamışsa, role kontrolü yapma
+    {
+
+        // Kullanıcı giriş yapmamışsa, role kontrolü yapma
         if (!Auth::check()) {
             return $next($request); // Oturum açmamışsa, middleware'i atla
         }

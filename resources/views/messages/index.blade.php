@@ -26,6 +26,7 @@
             <div class="card-header">
                 Yeni Mesaj Gönder
             </div>
+
             <div class="card-body">
                 <form action="{{ route('messages.send') }}" method="POST">
                     @csrf
