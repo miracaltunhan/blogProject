@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use App\Models\Notification;
-use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Http\Request; // Doğru içe aktarma
 use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
     /**
-     * Gönderilmiş mesajları listele.
+     * Kullanıcının mesajlarını listeleme.
      *
      * @return \Illuminate\Http\Response
      */
@@ -31,21 +32,25 @@ class MessageController extends Controller
      */
     public function send(Request $request)
     {
+        // Form verilerini logla
+        \Log::info('Form Data:', $request->all());
+
         $request->validate([
-            'receiver_id' => 'required|exists:users,id',
+            'receiver_name' => 'required|exists:users,name',
             'content' => 'required|string',
         ]);
 
-        Message::create([
-            'sender_id' => Auth::id(),
-            'receiver_id' => $request->receiver_id,
-            'content' => $request->content,
-            'is_read' => false,
-        ]);
+        $receiver = User::where('name', $request->receiver_name)->first();
 
-        // Bildirim oluştur
+            Message::create([
+                'sender_id' => Auth::id(),
+                'receiver_id' => $receiver->id,
+                'content' => $request->input('content'),
+                'is_read' => false,
+            ]);
+
         Notification::create([
-            'user_id' => $request->receiver_id,
+            'user_id' => $receiver->id,
             'message' => 'Yeni bir mesajınız var!',
             'is_read' => false,
         ]);

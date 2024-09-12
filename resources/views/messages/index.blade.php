@@ -1,5 +1,3 @@
-<!-- resources/views/messages/index.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -31,8 +29,8 @@
                 <form action="{{ route('messages.send') }}" method="POST">
                     @csrf
                     <div class="mb-3">
-                        <label for="receiver_id" class="form-label">Alıcı ID:</label>
-                        <input type="text" name="receiver_id" id="receiver_id" class="form-control" required>
+                        <label for="receiver_name" class="form-label">Alıcı Kullanıcı Adı:</label>
+                        <input type="text" name="receiver_name" id="receiver_name" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label for="content" class="form-label">Mesaj:</label>

@@ -39,7 +39,6 @@ class Kernel extends HttpKernel
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throtte' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'role_check' => \App\Http\Middleware\RoleCheck::class,
     ];
 
 

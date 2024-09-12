@@ -12,7 +12,7 @@ class BlogController extends Controller
     public function index()
     {
         $blogs = Blog::with('category', 'author')->get();
-        return view('dashboard.blogs.index', compact('blogs'));
+        return view('dashboard.index', compact('blogs'));
     }
 
     public function create()

@@ -1,8 +1,6 @@
-@extends('layouts.dashboard')
 
-@section('content')
     <h1>Blogs</h1>
-    <a href="{{ route('blogs.create') }}" class="btn btn-primary">Create New Blog</a>
+    <a href="" class="btn btn-primary">Create New Blog</a>
     <table>
         <thead>
         <tr>
@@ -30,4 +28,3 @@
         @endforeach
         </tbody>
     </table>
-@endsection

@@ -48,31 +48,5 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function getRoleAttribute()
-    {
-        $roles = [
-            1 => 'admin',
-            2 => 'editor',
-            3 => 'user',
-        ];
 
-        return $roles[$this->attributes['role']] ?? 'guest';
-    }
-
-    /**
-     * Set the role of the user.
-     *
-     * @param string $value
-     * @return void
-     */
-    public function setRoleAttribute($value)
-    {
-        $roles = [
-            'admin' => 1,
-            'editor' => 2,
-            'user' => 3,
-        ];
-
-        $this->attributes['role'] = $roles[$value] ?? 0;
-    }
 }

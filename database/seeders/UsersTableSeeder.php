@@ -10,17 +10,25 @@ class UsersTableSeeder extends Seeder
 {
     public function run()
     {
-        // Eğer aaa@gmail.com e-mail adresiyle bir kullanıcı yoksa, yeni bir kullanıcı oluştur.
-        $user = User::where('email', 'aaa@gmail.com')->first();
-        if (!$user) {
-            $user = User::create([
-                'name' => 'Test User',
+
+        $user1 = User::where('email', 'aaa@gmail.com')->first();
+        if (!$user1) {
+            $user1 = User::create([
+                'name' => 'Test User 1',
                 'email' => 'aaa@gmail.com',
-                'password' => Hash::make('12345678'), // Şifreyi buradan belirleyin
+                'password' => Hash::make('12345678'),
             ]);
         }
 
-        // Rolleri belirlenen kullanıcılara atama işlemleri
+        $user2 = User::where('email', 'bbb@gmail.com')->first();
+        if (!$user2) {
+            $user2 = User::create([
+                'name' => 'Test User 2',
+                'email' => 'bbb@gmail.com',
+                'password' => Hash::make('12345678'),
+            ]);
+        }
+
         $user1 = User::find(1);
         if ($user1) {
             $user1->assignRole('admin');

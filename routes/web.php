@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\RoleCheck;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\BlogController;
@@ -24,17 +25,18 @@ Route::middleware(['auth'])->group(function () {
     Route::view('profile', 'profile')->name('profile');
 
     Route::middleware(['auth'])->group(function () {
-            Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
-            Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
+        Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+        Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
     });
+
 
 
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
     Route::get('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
 });
 
-Route::middleware(['auth', 'role_check'])->group(function () {
-    Route::resource('blogs', BlogController::class);
+Route::middleware(['auth',RoleCheck::class ])->group(function () {
+    Route::get('blogs', [BlogController::class,'index']);
 });
 
 Route::get('/home', function () {
