@@ -1,4 +1,6 @@
+@extends('adminPanel.dashboard')
 
+@section('content')
     <h1>Blogs</h1>
     <a href="" class="btn btn-primary">Create New Blog</a>
     <table>
@@ -28,3 +30,4 @@
         @endforeach
         </tbody>
     </table>
+@endsection

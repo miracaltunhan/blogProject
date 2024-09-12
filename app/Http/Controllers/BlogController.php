@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
-use App\Models\Category; // Kategoriler için model ekle
-use App\Models\Author;   // Yazarlar için model ekle
+use App\Models\Category;
+use App\Models\Author;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller

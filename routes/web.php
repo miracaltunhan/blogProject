@@ -35,8 +35,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
 });
 
-Route::middleware(['auth',RoleCheck::class ])->group(function () {
-    Route::get('blogs', [BlogController::class,'index']);
+Route::middleware(['auth', RoleCheck::class])->group(function () {
+    Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
 });
 
 Route::get('/home', function () {
