@@ -1,39 +1,48 @@
-@extends('layouts.dashboard')
+<!-- resources/views/dashboard/blogs/create.blade.php -->
+
+@extends('layouts.app')
 
 @section('content')
-    <h1>Create Blog</h1>
-    <form action="{{ route('blogs.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <div>
-            <label for="title">Title</label>
-            <input type="text" id="title" name="title" required>
-        </div>
-        <div>
-            <label for="content">Content</label>
-            <textarea id="content" name="content" required></textarea>
-        </div>
-        <div>
-            <label for="category_id">Category</label>
-            <select id="category_id" name="category_id">
-                <option value="">Select a category</option>
-                @foreach($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div>
-            <label for="author_id">Author</label>
-            <select id="author_id" name="author_id">
-                <option value="">Select an author</option>
-                @foreach($authors as $author)
-                    <option value="{{ $author->id }}">{{ $author->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div>
-            <label for="image">Image</label>
-            <input type="file" id="image" name="image">
-        </div>
-        <button type="submit">Save</button>
-    </form>
+    <div class="container">
+        <h1>Create New Blog</h1>
+
+        <!-- Form for creating a new blog -->
+        <form action="{{ route('blogs.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" name="title" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea name="content" class="form-control" rows="5" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select name="category_id" class="form-control">
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="author">Author</label>
+                <select name="author_id" class="form-control">
+                    @foreach($authors as $author)
+                        <option value="{{ $author->id }}">{{ $author->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" name="image" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create Blog</button>
+        </form>
+    </div>
 @endsection

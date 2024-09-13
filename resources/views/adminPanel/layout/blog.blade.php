@@ -153,7 +153,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="text-center">
-                    <h2 class="lg-title">News</h2>
+                    <h2 class="lg-title">Blogs</h2>
                 </div>
             </div>
         </div>
@@ -244,43 +244,43 @@
 
                             <span class=" text-muted  text-capitalize">March 17, 2019</span>
 
-                      <!--  </article>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <article class="post-grid mb-5">
-                            <div class="post-thumb mb-4">
-                                <img src="images/news/f6.jpg" alt="" class="img-fluid w-100">
-                            </div>
-                            <span class=" cat-name text-color font-sm font-extra text-uppercase letter-spacing">Travel</span>
-                            <h3 class="post-title mt-1"><a href="blog-single.html">5 ingredient cilantro vinaigrette</a></h3>
+                            <!--  </article>
+                          </div>
+                          <div class="col-lg-6 col-md-6">
+                              <article class="post-grid mb-5">
+                                  <div class="post-thumb mb-4">
+                                      <img src="images/news/f6.jpg" alt="" class="img-fluid w-100">
+                                  </div>
+                                  <span class=" cat-name text-color font-sm font-extra text-uppercase letter-spacing">Travel</span>
+                                  <h3 class="post-title mt-1"><a href="blog-single.html">5 ingredient cilantro vinaigrette</a></h3>
 
-                            <span class=" text-muted  text-capitalize">July 28, 2019</span>
+                                  <span class=" text-muted  text-capitalize">July 28, 2019</span>
 
-                        </article>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <article class="post-grid mb-5">
-                            <div class="post-thumb mb-4">
-                                <img src="images/news/f7.jpg" alt="" class="img-fluid w-100">
-                            </div>
-                            <span class="cat-name text-color font-sm font-extra text-uppercase letter-spacing">Travel</span>
-                            <h3 class="post-title mt-1"><a href="blog-single.html">The best soft chocolate chip cookies</a></h3>
+                              </article>
+                          </div>
+                          <div class="col-lg-6 col-md-6">
+                              <article class="post-grid mb-5">
+                                  <div class="post-thumb mb-4">
+                                      <img src="images/news/f7.jpg" alt="" class="img-fluid w-100">
+                                  </div>
+                                  <span class="cat-name text-color font-sm font-extra text-uppercase letter-spacing">Travel</span>
+                                  <h3 class="post-title mt-1"><a href="blog-single.html">The best soft chocolate chip cookies</a></h3>
 
-                            <span class=" text-muted  text-capitalize">October 02, 2019</span>
+                                  <span class=" text-muted  text-capitalize">October 02, 2019</span>
 
-                        </article>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <article class="post-grid mb-5">
-                            <div class="post-thumb mb-4">
-                                <img src="images/news/f8.jpg" alt="" class="img-fluid w-100">
-                            </div>
-                            <span class="cat-name text-color font-sm font-extra text-uppercase letter-spacing">Travel</span>
-                            <h3 class="post-title mt-1"><a href="blog-single.html">How to Make the Best Baked Oatmeal</a></h3>
+                              </article>
+                          </div>
+                          <div class="col-lg-6 col-md-6">
+                              <article class="post-grid mb-5">
+                                  <div class="post-thumb mb-4">
+                                      <img src="images/news/f8.jpg" alt="" class="img-fluid w-100">
+                                  </div>
+                                  <span class="cat-name text-color font-sm font-extra text-uppercase letter-spacing">Travel</span>
+                                  <h3 class="post-title mt-1"><a href="blog-single.html">How to Make the Best Baked Oatmeal</a></h3>
 
-                            <span class=" text-muted  text-capitalize">September 15, 2019</span>
+                                  <span class=" text-muted  text-capitalize">September 15, 2019</span>
 
-                        </article>  -->
+                              </article>  -->
                     </div>
                 </div>
 
@@ -337,27 +337,27 @@
                         </div>
 
 
-      <!--                  <div class="sidebar-widget category mb-5">
-                            <h4 class="text-center widget-title">Catgeories</h4>
-                            <ul class="list-unstyled">
-                                <li class="align-items-center d-flex justify-content-between">
-                                    <a href="#">Innovation</a>
-                                    <span>14</span>
-                                </li>
-                                <li class="align-items-center d-flex justify-content-between">
-                                    <a href="#">Software</a>
-                                    <span>2</span>
-                                </li>
-                                <li class="align-items-center d-flex justify-content-between">
-                                    <a href="#">Social</a>
-                                    <span>10</span>
-                                </li>
-                                <li class="align-items-center d-flex justify-content-between">
-                                    <a href="#">Trends</a>
-                                    <span>5</span>
-                                </li>
-                            </ul>
-                        </div> -->
+                        <!--                  <div class="sidebar-widget category mb-5">
+                                              <h4 class="text-center widget-title">Catgeories</h4>
+                                              <ul class="list-unstyled">
+                                                  <li class="align-items-center d-flex justify-content-between">
+                                                      <a href="#">Innovation</a>
+                                                      <span>14</span>
+                                                  </li>
+                                                  <li class="align-items-center d-flex justify-content-between">
+                                                      <a href="#">Software</a>
+                                                      <span>2</span>
+                                                  </li>
+                                                  <li class="align-items-center d-flex justify-content-between">
+                                                      <a href="#">Social</a>
+                                                      <span>10</span>
+                                                  </li>
+                                                  <li class="align-items-center d-flex justify-content-between">
+                                                      <a href="#">Trends</a>
+                                                      <span>5</span>
+                                                  </li>
+                                              </ul>
+                                          </div> -->
 
                         <div class="sidebar-widget subscribe mb-5">
                             <h4 class="text-center widget-title">Newsletter</h4>

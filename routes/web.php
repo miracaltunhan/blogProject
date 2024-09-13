@@ -37,6 +37,10 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', RoleCheck::class])->group(function () {
     Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
+    Route::get('/blogs/create', [BlogController::class, 'create'])->name('blogs.create');
+    Route::post('/blogs', [BlogController::class, 'store'])->name('blogs.store');
+    Route::get('blogs/{blog}/edit', [BlogController::class, 'edit'])->name('blogs.edit');
+    Route::get('blogs/{blog}/destroy', [BlogController::class, 'edit'])->name('blogs.destroy');
 });
 
 Route::get('/home', function () {
@@ -59,6 +63,9 @@ Route::get('/contact', function () {
     return view('adminPanel.layout.contact'); // İletişim sayfası
 })->name('contact');
 
+Route::get('/blog', function () {
+    return view('adminPanel.layout.blog'); // İletişim sayfası
+})->name('blog');
 // Kayıt ve giriş işlemleri
 require __DIR__.'/auth.php';
 

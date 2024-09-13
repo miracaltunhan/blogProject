@@ -93,7 +93,7 @@
                                     <a class="dropdown-item" href="standard-right-sidebar.html">Lifestyle</a>
                                 </div>
                             </li> -->
-                            <li class="nav-item"><a href="{{ url('/blogs') }}" class="nav-link">Blogs</a></li>
+                            <li class="nav-item"><a href="{{ url('/blog') }}" class="nav-link">Blogs</a></li>
                             <li class="nav-item"><a href="{{ url('/news') }}" class="nav-link">News</a></li>
                             <li class="nav-item"><a href="{{ url('/anno') }}" class="nav-link">Announcements</a></li>
                             <li class="nav-item"><a href="{{ url('/writers') }}" class="nav-link">Writers</a></li>

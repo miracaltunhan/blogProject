@@ -19,7 +19,7 @@ class BlogController extends Controller
     {
         $categories = Category::all();
         $authors = Author::all();
-        return view('dashboard.blogs.create', compact('categories', 'authors'));
+        return view('dashboard.create', compact('categories', 'authors'));
     }
 
     public function store(Request $request)
@@ -32,16 +32,20 @@ class BlogController extends Controller
             'image' => 'nullable|image',
         ]);
 
+        // Blog verilerini oluşturuyoruz
         $blog = new Blog($request->except('image'));
 
+        // Eğer bir görsel yüklendiyse, dosyayı kaydet
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('images');
             $blog->image = $path;
         }
 
         $blog->save();
-        return redirect()->route('blogs.index')->with('success', 'Blog created successfully.');
+
+        return redirect()->route('blogs.index')->with('success', 'Blog başarıyla oluşturuldu.');
     }
+
 
     public function edit(Blog $blog)
     {

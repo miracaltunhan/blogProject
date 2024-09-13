@@ -12,14 +12,27 @@ return new class extends Migration
     public function up()
     {
         Schema::create('blogs', function (Blueprint $table) {
+            // Blog tablosuna id kolonunu ekliyoruz
             $table->id();
+
+            // Blog başlığı ve içeriği için gerekli kolonları oluşturuyoruz
             $table->string('title');
             $table->text('content');
+
+            // Blog görseli için opsiyonel bir kolon (nullable)
             $table->string('image')->nullable();
-            // 'categories' tablosuna referans belirtiyoruz
-            $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null');
-            // 'authors' tablosuna referans belirtiyoruz
-            $table->foreignId('author_id')->nullable()->constrained('authors')->onDelete('set null');
+
+            // 'categories' tablosuna dış anahtar referansı ekliyoruz
+            $table->foreignId('category_id')->nullable()
+                ->constrained('categories')
+                ->onDelete('set null'); // Kategori silinirse null yap
+
+            // 'authors' tablosuna dış anahtar referansı ekliyoruz
+            $table->foreignId('author_id')->nullable()
+                ->constrained('authors')
+                ->onDelete('set null'); // Yazar silinirse null yap
+
+            // Zaman damgalarını ekliyoruz (created_at, updated_at)
             $table->timestamps();
         });
     }
@@ -29,7 +42,7 @@ return new class extends Migration
      */
     public function down()
     {
+
         Schema::dropIfExists('blogs');
     }
 };
-
