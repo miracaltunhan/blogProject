@@ -161,126 +161,37 @@
 </div>
 
 
-<section class="section-padding">
+<section class="section-padding ">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-6 col-md-6">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <article class="post-grid mb-5">
-                            <div class="post-thumb mb-4">
-                                <img src="{{asset('adminPanel/images/news/f1.jpg')}}" alt="" class="img-fluid w-100">
+                    @if($blogs->isEmpty())
+                        <p>Henüz blog yok.</p>
+                    @else
+                        @foreach($blogs as $blog)
+                            <div class="col-lg-6 col-md-6">
+                                <article class="post-grid mb-5">
+                                    <div class="post-thumb mb-4">
+                                        <img src="{{ asset('images/' . $blog->image) }}" alt="{{ $blog->title }}" class="img-fluid w-100">
+                                    </div>
+                                    <span class="cat-name text-color font-extra text-sm text-uppercase letter-spacing-1">{{ $blog->category->name }}</span>
+                                    <h3 class="post-title mt-1">
+                                            <a href="{{ route('blog.single', $blog->id) }}">{{ $blog->title }}</a>
+                                    </h3>
+                                    <span class="text-muted text-capitalize">{{ $blog->created_at->format('F j, Y') }}</span>
+                                </article>
                             </div>
-                            <span class="cat-name text-color font-extra text-sm text-uppercase letter-spacing-1"></span>
-                            <h3 class="post-title mt-1"><a href="blog-single.html">Autonomous Vehicles and the Technologies Revolutionizing Transportation
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 
 
-
-
-                                </a></h3>
-
-                            <span class=" text-muted  text-capitalize">September 15, 2019</span>
-
-                        </article>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <article class="post-grid mb-5">
-                            <div class="post-thumb mb-4">
-                                <img src="{{asset('adminPanel/images/news/f2.jpg')}}" alt="" class="img-fluid w-100">
-                            </div>
-                            <span class="cat-name text-color font-sm font-extra text-uppercase letter-spacing"></span>
-                            <h3 class="post-title mt-1"><a href="blog-single.html">A New Era in Cybersecurity: Major Advances in Protection Methods
-                                </a></h3>
-
-                            <span class=" text-muted  text-capitalize">August 05, 2019</span>
-
-                        </article>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <article class="post-grid mb-5">
-                            <div class="post-thumb mb-4">
-                                <img src="{{asset('adminPanel/images/news/f8.jpg')}}" alt="" class="img-fluid w-100">
-                            </div>
-                            <span class=" cat-name text-color font-sm font-extra text-uppercase letter-spacing"></span>
-                            <h3 class="post-title mt-1"><a href="blog-single.html">The Impact of the Metaverse on Business: What Awaits Us in the Future?</a></h3>
-
-                            <span class=" text-muted  text-capitalize">April 22, 2019</span>
-
-                        </article>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <article class="post-grid mb-5">
-                            <div class="post-thumb mb-4">
-                                <img src="{{asset('adminPanel/images/news/f3.jpg')}}" alt="" class="img-fluid w-100">
-                            </div>
-                            <span class="cat-name text-color font-sm font-extra text-uppercase letter-spacing"></span>
-                            <h3 class="post-title mt-1"><a href="blog-single.html">New AI Technology Transforming the Business World
-                                </a></h3>
-
-                            <span class=" text-muted  text-capitalize">September 10, 2019</span>
-
-                        </article>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <article class="post-grid mb-5">
-                            <div class="post-thumb mb-4">
-                                <img src="{{asset('adminPanel/images/news/f4.jpg')}}" alt="" class="img-fluid w-100">
-                            </div>
-                            <span class="cat-name text-color font-sm font-extra text-uppercase letter-spacing"></span>
-                            <h3 class="post-title mt-1"><a href="blog-single.html">Smart Cities: How the Cities of the Future Are Taking Shape</a></h3>
-
-                            <span class=" text-muted  text-capitalize">January 04, 2019</span>
-
-                        </article>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <article class="post-grid mb-5">
-                            <div class="post-thumb mb-4">
-                                <img src="{{asset('adminPanel/images/news/f5.jpg')}}" alt="" class="img-fluid w-100">
-                            </div>
-                            <span class="cat-name text-color font-sm font-extra text-uppercase letter-spacing"></span>
-                            <h3 class="post-title mt-1"><a href="blog-single.html">Recent Developments in Renewable Energy Technologies</a></h3>
-
-                            <span class=" text-muted  text-capitalize">March 17, 2019</span>
-
-                            <!--  </article>
-                          </div>
-                          <div class="col-lg-6 col-md-6">
-                              <article class="post-grid mb-5">
-                                  <div class="post-thumb mb-4">
-                                      <img src="images/news/f6.jpg" alt="" class="img-fluid w-100">
-                                  </div>
-                                  <span class=" cat-name text-color font-sm font-extra text-uppercase letter-spacing">Travel</span>
-                                  <h3 class="post-title mt-1"><a href="blog-single.html">5 ingredient cilantro vinaigrette</a></h3>
-
-                                  <span class=" text-muted  text-capitalize">July 28, 2019</span>
-
-                              </article>
-                          </div>
-                          <div class="col-lg-6 col-md-6">
-                              <article class="post-grid mb-5">
-                                  <div class="post-thumb mb-4">
-                                      <img src="images/news/f7.jpg" alt="" class="img-fluid w-100">
-                                  </div>
-                                  <span class="cat-name text-color font-sm font-extra text-uppercase letter-spacing">Travel</span>
-                                  <h3 class="post-title mt-1"><a href="blog-single.html">The best soft chocolate chip cookies</a></h3>
-
-                                  <span class=" text-muted  text-capitalize">October 02, 2019</span>
-
-                              </article>
-                          </div>
-                          <div class="col-lg-6 col-md-6">
-                              <article class="post-grid mb-5">
-                                  <div class="post-thumb mb-4">
-                                      <img src="images/news/f8.jpg" alt="" class="img-fluid w-100">
-                                  </div>
-                                  <span class="cat-name text-color font-sm font-extra text-uppercase letter-spacing">Travel</span>
-                                  <h3 class="post-title mt-1"><a href="blog-single.html">How to Make the Best Baked Oatmeal</a></h3>
-
-                                  <span class=" text-muted  text-capitalize">September 15, 2019</span>
-
-                              </article>  -->
                     </div>
                 </div>
 

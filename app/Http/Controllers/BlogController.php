@@ -12,6 +12,7 @@ class BlogController extends Controller
     public function index()
     {
         $blogs = Blog::with('category', 'author')->get();
+
         return view('dashboard.index', compact('blogs'));
     }
 
@@ -46,6 +47,12 @@ class BlogController extends Controller
         return redirect()->route('blogs.index')->with('success', 'Blog başarıyla oluşturuldu.');
     }
 
+    public function show($id)
+    {
+        $blog = Blog::with('category', 'author')->findOrFail($id);
+        return view('adminPanel.layout.show', compact('blog'));
+
+    }
 
     public function edit(Blog $blog)
     {
@@ -79,5 +86,12 @@ class BlogController extends Controller
     {
         $blog->delete();
         return redirect()->route('blogs.index')->with('success', 'Blog deleted successfully.');
+
     }
+    public function showBlogs()
+    {
+        $blogs = Blog::with('category', 'author')->get();
+        return view('adminPanel.layout.blog', compact('blogs')); // 'blogs.index' adında bir view oluşturmalısınız
+    }
+
 }
