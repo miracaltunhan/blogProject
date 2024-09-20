@@ -173,7 +173,7 @@
                             <div class="col-lg-6 col-md-6">
                                 <article class="post-grid mb-5">
                                     <div class="post-thumb mb-4">
-                                        <img src="{{ asset('images/' . $blog->image) }}" alt="{{ $blog->title }}" class="img-fluid w-100">
+                                        <img src="{{ asset('storage/app/images/' . $blog->image) }}" alt="{{ $blog->title }}" class="img-fluid w-100">
                                     </div>
                                     <span class="cat-name text-color font-extra text-sm text-uppercase letter-spacing-1">{{ $blog->category->name }}</span>
                                     <h3 class="post-title mt-1">
