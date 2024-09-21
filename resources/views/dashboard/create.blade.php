@@ -1,5 +1,3 @@
-<!-- resources/views/dashboard/blogs/create.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -29,12 +27,8 @@
             </div>
 
             <div class="form-group">
-                <label for="author">Author</label>
-                <select name="author_id" class="form-control">
-                    @foreach($authors as $author)
-                        <option value="{{ $author->id }}">{{ $author->name }}</option>
-                    @endforeach
-                </select>
+                <label for="author_name">Author Name</label>
+                <input type="text" name="author_name" class="form-control" required>
             </div>
 
             <div class="form-group">

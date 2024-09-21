@@ -14,6 +14,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\UserController;
 
 
+
 Route::middleware(['auth'])->group(function () {
     // Admin için dashboard yönlendirmesi
     Route::get('/dashboard', function () {
@@ -76,3 +77,7 @@ Route::post('register', [RegisterController::class, 'register']);
 Route::get('/author/{id}', [AuthorController::class, 'show']);
 Route::get('/dashboard/users', [UserController::class, 'index'])->name('dashboard.users');
 Route::post('/users/promote/{id}', [UserController::class, 'promoteToWriter'])->name('users.promote');
+Route::post('/blogs/{id}/like', [BlogController::class, 'likeBlog'])->name('blogs.like');
+Route::post('/blogs/{id}/comments', [BlogController::class, 'storeComment'])->name('comments.store');
+Route::resource('categories', CategoryController::class);
+

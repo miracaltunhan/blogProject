@@ -26,4 +26,13 @@ class Blog extends Model
     {
         return $this->belongsTo(Author::class);
     }
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 }

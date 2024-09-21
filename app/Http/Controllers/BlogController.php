@@ -6,6 +6,8 @@ use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Author;
 use Illuminate\Http\Request;
+use App\Models\Like;
+use App\Models\Comment;
 
 class BlogController extends Controller
 {
@@ -92,6 +94,51 @@ class BlogController extends Controller
     {
         $blogs = Blog::with('category', 'author')->get();
         return view('adminPanel.layout.blog', compact('blogs')); // 'blogs.index' adında bir view oluşturmalısınız
+    }
+
+
+    public function likeBlog($id)
+    {
+        // Kullanıcı bu blogu daha önce beğenmiş mi kontrol edin
+        $existingLike = Like::where('blog_id', $id)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if ($existingLike) {
+            // Bu blogu beğenen kişilerin isimlerini al
+            $likers = Like::where('blog_id', $id)
+                ->with('user') // User ilişkisini getir
+                ->get()
+                ->pluck('user.name') // User isimlerini al
+                ->toArray();
+
+            // Kullanıcıya beğenenlerin isimlerini göster
+            return back()->with('error', 'You have already liked this blog. People who liked this blog: ' . implode(', ', $likers));
+        }
+
+        // Eğer beğenmemişse beğeni oluştur
+        Like::create([
+            'blog_id' => $id,
+            'user_id' => auth()->id(),
+        ]);
+
+        return back()->with('success', 'Blog liked successfully!');
+    }
+
+    public function storeComment(Request $request, $id)
+    {
+
+        $request->validate([
+            'content' => 'required',
+        ]);
+
+        Comment::create([
+            'blog_id' => $id,
+            'user_id' => auth()->id(),
+            'content' => $request->content,
+        ]);
+
+        return back()->with('success', 'Comment added successfully!');
     }
 
 }
