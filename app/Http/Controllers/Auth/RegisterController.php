@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class RegisterController extends Controller
@@ -67,5 +68,8 @@ class RegisterController extends Controller
     {
         return Auth::guard(); // Laravel'ın varsayılan auth guard'ını döndür
     }
-
+    protected function redirectPath()
+    {
+        return '/home'; // Kullanıcının yönlendirileceği yol
+    }
 }

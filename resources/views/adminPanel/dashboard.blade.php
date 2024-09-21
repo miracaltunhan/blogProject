@@ -19,10 +19,11 @@
 </div>
 
 @if(Auth::user()->hasRole('admin')) <!-- Admin rolünü kontrol ediyoruz -->
-<div class="py-4">
-    <a href="{{ route('blogs.index') }}" class="btn btn-primary">Blog Yönetimi</a>
-    <a href="{{ route('dashboard.users') }}" class="btn btn-primary">Kullanıcılar</a> <!-- Kullanıcılar butonu -->
+<div class="py-4" style="text-align: center;">
+    <a href="{{ route('blogs.index') }}" class="btn" style="display: block; width: 200px; margin: 10px auto; padding: 10px; font-size: 16px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; text-decoration: none; transition: background-color 0.3s;">Blogs</a>
+    <a href="{{ route('dashboard.users') }}" class="btn" style="display: block; width: 200px; margin: 10px auto; padding: 10px; font-size: 16px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; text-decoration: none; transition: background-color 0.3s;">Users</a>
 </div>
+
 @endif
 
 @endsection <!-- Content alanını kapatıyoruz -->

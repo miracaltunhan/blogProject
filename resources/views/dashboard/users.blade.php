@@ -31,6 +31,7 @@
             <td>
                 <form action="{{ route('users.promote', $user->id) }}" method="POST">
                     @csrf
+                    <input type="text" name="title" placeholder="Yeni Title" required>
                     <button type="submit">Yazara Terfi Et</button>
                 </form>
             </td>

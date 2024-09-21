@@ -75,4 +75,4 @@ Route::get('register', [RegisterController::class, 'showRegistrationForm'])->nam
 Route::post('register', [RegisterController::class, 'register']);
 Route::get('/author/{id}', [AuthorController::class, 'show']);
 Route::get('/dashboard/users', [UserController::class, 'index'])->name('dashboard.users');
-Route::post('/dashboard/users/{id}/promote', [UserController::class, 'promoteToWriter'])->name('users.promote');
+Route::post('/users/promote/{id}', [UserController::class, 'promoteToWriter'])->name('users.promote');

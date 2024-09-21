@@ -8,16 +8,17 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     public function index() {
-        $users = User::where('id', 3)->get(); // ID'si 3 olan kullanıcıyı al
+        $users = User::where('role', 3)->get(); // ID'si 3 olan kullanıcıyı al
         return view('dashboard.users', compact('users'));
     }
 
-    public function promoteToWriter($id) {
+    public function promoteToWriter(Request $request, $id) {
         $user = User::findOrFail($id);
-        $user->role = 2; // 'writer' rolü için 2 değeri
+        $user->role = 2; // Kullanıcının rolünü 2 yap
+        $user->title = $request->input('title'); // Title'ı güncelle
         $user->save();
 
-        return redirect()->route('dashboard.users')->with('success', 'Kullanıcı yazara terfi edildi!');
+        return redirect()->back()->with('success', 'Kullanıcı terfi edildi.');
     }
 
 
