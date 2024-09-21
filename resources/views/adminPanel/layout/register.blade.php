@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <!-- Include Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Include Custom CSS -->
     <style>
         body {
             background-color: #f8f9fa;
@@ -22,16 +20,6 @@
         .register-container h1 {
             margin-bottom: 20px;
         }
-        .form-control {
-            border-radius: 4px;
-        }
-        .btn-primary {
-            border-radius: 4px;
-            padding: 10px;
-        }
-        .text-center {
-            margin-top: 15px;
-        }
     </style>
 </head>
 <body>
@@ -39,7 +27,7 @@
 <div class="register-container">
     <h1 class="text-center">Register</h1>
 
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
         @csrf
 
         <div class="mb-3">
@@ -77,6 +65,11 @@
             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
         </div>
 
+        <div class="mb-3">
+            <label for="profile_image" class="form-label">Profile Image</label>
+            <input type="file" class="form-control" id="profile_image" name="profile_image">
+        </div>
+
         <button type="submit" class="btn btn-primary w-100">Register</button>
 
         <div class="text-center mt-3">
@@ -85,7 +78,6 @@
     </form>
 </div>
 
-<!-- Include Bootstrap JS and dependencies -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 </body>

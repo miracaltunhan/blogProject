@@ -174,70 +174,20 @@
                             </div>
                             <h4 class="mb-0 mt-4">Miraç Altunhan</h4>
                             <p>Yazılım Mühendisi</p>
-                            <p>I'm Miraç, I earned my degree in software engineering last year. You can follow my journey on this blog!</p>
                             <img src="images/liammason.png" alt="" class="img-fluid">
                         </div>
 
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="sidebar-widget about mb-5 text-center p-3">
-                            <div class="about-author">
-                                <img src="{{asset('adminPanel/images/mirac.jfif')}}" alt="" class="img-fluid">
+                        @foreach($authors as $author)
+                            <div class="sidebar-widget about mb-5 text-center p-3">
+                                <div class="about-author">
+                                    <img src="{{ asset('adminPanel/images/' . $author->image) }}" alt="" class="img-fluid">
+                                </div>
+                                <h4 class="mb-0 mt-4">{{ $author->name }}</h4>
+                                <p>{{ $author->title }}</p>
+                                <p>{{ $author->bio }}</p>
                             </div>
-                            <h4 class="mb-0 mt-4">Miraç Altunhan</h4>
-                            <p>Yazılım Mühendisi</p>
-                            <p>I'm Miraç, I earned my degree in software engineering last year. You can follow my journey on this blog!</p>
-                            <img src="images/liammason.png" alt="" class="img-fluid">
-                        </div>
+                        @endforeach
 
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="sidebar-widget about mb-5 text-center p-3">
-                            <div class="about-author">
-                                <img src="{{asset('adminPanel/images/mirac.jfif')}}" alt="" class="img-fluid">
-                            </div>
-                            <h4 class="mb-0 mt-4">Miraç Altunhan</h4>
-                            <p>Yazılım Mühendisi</p>
-                            <p>I'm Miraç, I earned my degree in software engineering last year. You can follow my journey on this blog!</p>
-                            <img src="images/liammason.png" alt="" class="img-fluid">
-                        </div>
-
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="sidebar-widget about mb-5 text-center p-3">
-                            <div class="about-author">
-                                <img src="{{asset('adminPanel/images/mirac.jfif')}}" alt="" class="img-fluid">
-                            </div>
-                            <h4 class="mb-0 mt-4">Miraç Altunhan</h4>
-                            <p>Yazılım Mühendisi</p>
-                            <p>I'm Miraç, I earned my degree in software engineering last year. You can follow my journey on this blog!</p>
-                            <img src="images/liammason.png" alt="" class="img-fluid">
-                        </div>
-
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="sidebar-widget about mb-5 text-center p-3">
-                            <div class="about-author">
-                                <img src="{{asset('adminPanel/images/mirac.jfif')}}" alt="" class="img-fluid">
-                            </div>
-                            <h4 class="mb-0 mt-4">Miraç Altunhan</h4>
-                            <p>Yazılım Mühendisi</p>
-                            <p>I'm Miraç, I earned my degree in software engineering last year. You can follow my journey on this blog!</p>
-                            <img src="images/liammason.png" alt="" class="img-fluid">
-                        </div>
-
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="sidebar-widget about mb-5 text-center p-3">
-                            <div class="about-author">
-                                <img src="{{asset('adminPanel/images/mirac.jfif')}}" alt="" class="img-fluid">
-                            </div>
-                            <h4 class="mb-0 mt-4">Miraç Altunhan</h4>
-                            <p>Yazılım Mühendisi</p>
-                            <p>I'm Miraç, I earned my degree in software engineering last year. You can follow my journey on this blog!</p>
-                            <img src="images/liammason.png" alt="" class="img-fluid">
-                        </div>
-                        </article>
                         <!--
                       </div>
                       <div class="col-lg-6 col-md-6">

@@ -20,7 +20,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role', // Role alanını burada belirtin
+        'role',
+        'profile_image',// Role alanını burada belirtin
     ];
 
     /**

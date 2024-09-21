@@ -10,6 +10,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\AuthorController;
+
 
 Route::middleware(['auth'])->group(function () {
     // Admin için dashboard yönlendirmesi
@@ -57,9 +59,7 @@ Route::get('/anno', function () {
     return view('adminPanel.layout.announcement'); // Duyurular sayfası
 })->name('announcement');
 
-Route::get('/writers', function () {
-    return view('adminPanel.layout.writers'); // Yazarlar sayfası
-})->name('writers');
+Route::get('/writers', [AuthorController::class, 'writers'])->name('writers');
 
 Route::get('/contact', function () {
     return view('adminPanel.layout.contact'); // İletişim sayfası
@@ -72,3 +72,4 @@ require __DIR__.'/auth.php';
 
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
+Route::get('/author/{id}', [AuthorController::class, 'show']);
