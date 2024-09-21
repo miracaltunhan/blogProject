@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\UserController;
 
 
 Route::middleware(['auth'])->group(function () {
@@ -73,3 +74,5 @@ require __DIR__.'/auth.php';
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
 Route::get('/author/{id}', [AuthorController::class, 'show']);
+Route::get('/dashboard/users', [UserController::class, 'index'])->name('dashboard.users');
+Route::post('/dashboard/users/{id}/promote', [UserController::class, 'promoteToWriter'])->name('users.promote');

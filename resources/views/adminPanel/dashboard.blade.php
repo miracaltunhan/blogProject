@@ -21,6 +21,7 @@
 @if(Auth::user()->hasRole('admin')) <!-- Admin rolünü kontrol ediyoruz -->
 <div class="py-4">
     <a href="{{ route('blogs.index') }}" class="btn btn-primary">Blog Yönetimi</a>
+    <a href="{{ route('dashboard.users') }}" class="btn btn-primary">Kullanıcılar</a> <!-- Kullanıcılar butonu -->
 </div>
 @endif
 

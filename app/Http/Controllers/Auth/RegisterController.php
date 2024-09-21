@@ -63,5 +63,9 @@ class RegisterController extends Controller
         return view('adminPanel.layout.register'); // Doğru yolu burada belirtiyoruz
     }
 
+    protected function guard()
+    {
+        return Auth::guard(); // Laravel'ın varsayılan auth guard'ını döndür
+    }
 
 }
