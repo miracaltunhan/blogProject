@@ -18,14 +18,16 @@ class RoleCheck
      */
     public function handle(Request $request, Closure $next)
     {
-
         if (Auth::user()) {
             // Kullanıcı rolünü kontrol et
-            if (Auth::user()->role == 1) {
+            $user=Auth::user();
+
+            if ($user->hasRole('admin') || $user->hasRole('writer')) {
                 return $next($request);
             }
         }
 
         return redirect('/home');
     }
+
 }

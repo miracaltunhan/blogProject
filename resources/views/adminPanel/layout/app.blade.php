@@ -42,11 +42,44 @@
         <div class="row align-items-center">
             <div class="col-lg-2 header-left col-md-4 col-7">
                 <ul class="list-inline header-socials-2 mb-0 text-center">
-                    <!-- Mesajlaşma Butonu -->
-                    @if(Auth::check()) <!-- Kullanıcı giriş yapmış mı kontrol et -->
-                    <a href="{{ route('messages.index') }}" class="btn btn-primary">Messages</a>
-                    @endif
 
+                    <div style="display: flex; align-items: flex-end;">
+                        @if(Auth::check()) <!-- Kullanıcı giriş yapmış mı kontrol et -->
+                        <a href="{{ route('messages.index') }}" class="btn btn-primary" style="margin-right: 15px; margin-left: -40px; margin-bottom: -5px;">Message</a>
+                        @endif
+
+                            @if(Auth::check())
+                                <div class="notification-container" style="display: inline-block; text-align: left;">
+                                    <button id="notificationButton" class="btn btn-primary"
+                                            style="padding: 5px 10px; font-size: 10px; width: auto; margin-bottom: -5px;">
+                                        Notifications
+                                    </button>
+                                    <div id="notificationDropdown" class="dropdown-content" style="display: none;">
+                                        <ul>
+                                            @php
+                                                $notifications = \App\Models\Notification::where('user_id', Auth::id())
+             ->where('is_read', 1)
+             ->get();
+
+
+                                            @endphp
+                                            @forelse($notifications as $notification)
+                                                <li>
+                                                    @if($notification->type == 'blog')
+                                                        <a href="{{ route('blogs.show', $notification->entity_id) }}">Blog beğenildi </a>
+                                                    @elseif($notification->type == 'comment')
+                                                        <a href="{{ route('comments.show', $notification->entity_id) }}">Yorum yapıldı</a>
+                                                    @endif
+                                                </li>
+                                            @empty
+                                                <li>Hiç bildirim yok.</li>
+                                            @endforelse
+                                        </ul>
+                                    </div>
+                                </div>
+                            @endif
+
+                    </div>
 
                     <li class="list-inline-item">
                         <div class="search_toggle mobile-search d-md-block d-lg-none "><i class="ti-search "></i></div>
@@ -97,19 +130,7 @@
                             <li class="nav-item"><a href="{{ url('/news') }}" class="nav-link">News</a></li>
                             <li class="nav-item"><a href="{{ url('/anno') }}" class="nav-link">Announcements</a></li>
                             <li class="nav-item"><a href="{{ url('/writers') }}" class="nav-link">Writers</a></li>
-                            <!-- <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown"
-                                   aria-haspopup="true" aria-expanded="false">
-                                    Writers
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                                    <a class="dropdown-item" href="post-video.html">Video Formats</a>
-                                    <a class="dropdown-item" href="post-audio.html">Audio Format</a>
-                                    <a class="dropdown-item" href="post-link.html">Quote Format</a>
-                                    <a class="dropdown-item" href="post-gallery.html">Gallery Format</a>
-                                    <a class="dropdown-item" href="post-image.html">Image Format</a>
-                                </div>
-                            </li> -->
+
                             <li class="nav-item"><a href="{{ url('/contact') }}" class="nav-link">Contact</a></li>
 
                             <!-- Kullanıcı giriş yapmamışsa göster -->
@@ -128,6 +149,7 @@
                                     <a href="{{ url('/logout') }}" class="nav-link">Logout</a>
                                 </li>
                                 @endauth
+
 
 
                                 </li>
@@ -647,6 +669,16 @@
 <!-- main js -->
 <script src="{{asset('adminPanel/js/custom.js')}}"></script>
 
+<script>
+    document.getElementById('notificationButton').addEventListener('click', function() {
+        var dropdown = document.getElementById('notificationDropdown');
+        if (dropdown.style.display === 'none') {
+            dropdown.style.display = 'block';
+        } else {
+            dropdown.style.display = 'none';
+        }
+    });
+</script>
 
 </body>
 

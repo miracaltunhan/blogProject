@@ -19,7 +19,7 @@ Route::middleware(['auth'])->group(function () {
     // Admin için dashboard yönlendirmesi
     Route::get('/dashboard', function () {
         $user = Auth::user();
-        if ($user->hasRole('admin')) {
+        if ($user->hasRole('admin') || $user->hasRole('writer')) {
             return view('adminPanel.dashboard');
         }
         return redirect('/home');
@@ -80,4 +80,5 @@ Route::post('/users/promote/{id}', [UserController::class, 'promoteToWriter'])->
 Route::post('/blogs/{id}/like', [BlogController::class, 'likeBlog'])->name('blogs.like');
 Route::post('/blogs/{id}/comments', [BlogController::class, 'storeComment'])->name('comments.store');
 Route::resource('categories', CategoryController::class);
-
+Route::get('/notifications', [NotificationController::class, 'getNotifications'])->name('notifications');
+Route::get('/messages/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('messages.markAsRead');

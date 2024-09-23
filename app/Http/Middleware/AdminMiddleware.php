@@ -13,12 +13,15 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        // Kullanıcının admin rolüne sahip olup olmadığını kontrol et
-        if (Auth::check() && Auth::user()->hasRole('admin')) {
+        // Kullanıcının rolünü kontrol et
+        $user=Auth::user();
+        dd($user->hasRole());
+        if ($user->hasRole('admin') || $user->hasRole('writer')) {
             return $next($request);
         }
 
-        // Eğer kullanıcı admin değilse, home sayfasına yönlendir
+        // Eğer kullanıcı uygun değilse, home sayfasına yönlendir
         return redirect('/home');
     }
+
 }

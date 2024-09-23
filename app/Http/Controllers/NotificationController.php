@@ -2,39 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Message;
 use App\Models\Notification;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
-    /**
-     * Bildirimleri listele.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function getNotifications()
     {
+        // Giriş yapan kullanıcının okundu olarak işaretlenmemiş mesajlarını getir
         $notifications = Notification::where('user_id', Auth::id())
-            ->where('is_read', false)
+            ->where('is_read', 1)
             ->get();
 
-        return view('notifications.index', compact('notifications'));
+        return view('your_view_name', compact('notifications'));
     }
 
-    /**
-     * Bildirimi okundu olarak işaretle.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function markAsRead($id)
     {
-        $notification = Notification::find($id);
-        if ($notification) {
-            $notification->update(['is_read' => true]);
+        // Mesajı okundu olarak işaretle
+        $message = Message::find($id);
+        if ($message && $message->receiver_id == Auth::id()) {
+            $message->is_read = 0;
+            $message->save();
         }
 
-        return redirect()->back();
+        return redirect()->route('messages.index');
     }
 }

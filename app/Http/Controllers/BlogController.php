@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Author;
+use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use App\Models\Like;
 use App\Models\Comment;
-
+use App\Models\Notification;
 class BlogController extends Controller
 {
     public function index()
@@ -37,6 +38,9 @@ class BlogController extends Controller
 
         // Blog verilerini oluşturuyoruz
         $blog = new Blog($request->except('image'));
+
+
+        $blog->author_id=\auth()->id();
 
         // Eğer bir görsel yüklendiyse, dosyayı kaydet
         if ($request->hasFile('image')) {
@@ -99,9 +103,13 @@ class BlogController extends Controller
 
     public function likeBlog($id)
     {
+        $userId = auth()->id();
+        $blog = Blog::find($id);
+        $blogOwnerId = $blog->author_id;
+
         // Kullanıcı bu blogu daha önce beğenmiş mi kontrol edin
         $existingLike = Like::where('blog_id', $id)
-            ->where('user_id', auth()->id())
+            ->where('user_id', $userId)
             ->first();
 
         if ($existingLike) {
@@ -119,26 +127,43 @@ class BlogController extends Controller
         // Eğer beğenmemişse beğeni oluştur
         Like::create([
             'blog_id' => $id,
-            'user_id' => auth()->id(),
+            'user_id' => $userId,
         ]);
+
+        // Bildirim oluştur
+        Notification::create([
+            'user_id' => $blogOwnerId, // Blogun sahibinin ID'si
+            'like_id'=>\auth()->id(),
+            'type' => 'blog',
+            'entity_id' => $id,
+        ]);
+        dd("dsf");
 
         return back()->with('success', 'Blog liked successfully!');
     }
 
     public function storeComment(Request $request, $id)
     {
-
         $request->validate([
-            'content' => 'required',
+            'content' => 'required|string|max:255',
+            'blog_id' => 'required|exists:blogs,id',
+            'user_id' => 'required|exists:users,id',
         ]);
 
         Comment::create([
-            'blog_id' => $id,
-            'user_id' => auth()->id(),
+            'blog_id' => $request->blog_id,
+            'user_id' => $request->user_id,
             'content' => $request->content,
+        ]);
+
+        // Bildirim oluştur
+        $blogOwnerId = Blog::find($id)->user_id; // Yorum yapılan blogun sahibinin ID'si
+        Notification::create([
+            'user_id' => $blogOwnerId,
+            'type' => 'comment',
+            'entity_id' => $comment->id, // Yorumun ID'si
         ]);
 
         return back()->with('success', 'Comment added successfully!');
     }
-
 }

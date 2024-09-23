@@ -27,9 +27,10 @@ return new class extends Migration
                 ->constrained('categories')
                 ->onDelete('set null'); // Kategori silinirse null yap
 
-            // 'authors' tablosuna dış anahtar referansı ekliyoruz
-            $table->foreignId('author_id')->nullable()
-                ->constrained('authors')
+            $table->unsignedBigInteger('author_id')->nullable(); // author_id alanı nullable
+            $table->foreign('author_id')
+                ->references('id')
+                ->on('users')
                 ->onDelete('set null'); // Yazar silinirse null yap
 
             // Zaman damgalarını ekliyoruz (created_at, updated_at)
