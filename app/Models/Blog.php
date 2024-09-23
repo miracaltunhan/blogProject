@@ -28,8 +28,9 @@ class Blog extends Model
     }
     public function likes()
     {
-        return $this->hasMany(Like::class);
+        return $this->belongsToMany(User::class, 'likes'); // 'likes' tablosu
     }
+
     public function comments()
     {
         return $this->hasMany(Comment::class);

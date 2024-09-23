@@ -20,13 +20,13 @@ class NotificationController extends Controller
 
     public function markAsRead($id)
     {
-        // Mesajı okundu olarak işaretle
-        $message = Message::find($id);
-        if ($message && $message->receiver_id == Auth::id()) {
-            $message->is_read = 0;
-            $message->save();
+        $notification = Notification::find($id);
+        if ($notification) {
+            $notification->is_read = 0; // 1'den 0'a değiştir
+            $notification->save();
         }
 
-        return redirect()->route('messages.index');
+        return redirect()->route('blog.single', ['id' => $notification->entity_id]); // Blog sayfasına yönlendir
     }
+
 }

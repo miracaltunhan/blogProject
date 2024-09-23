@@ -17,4 +17,5 @@ class AuthorController extends Controller
         $authors = User::where('role', 2)->get();
         return view('adminPanel.layout.writers', compact('authors'));
     }
+
 }

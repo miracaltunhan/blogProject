@@ -46,42 +46,45 @@
                     <div style="display: flex; align-items: flex-end;">
                         @if(Auth::check()) <!-- Kullanıcı giriş yapmış mı kontrol et -->
                         <a href="{{ route('messages.index') }}" class="btn btn-primary" style="margin-right: 15px; margin-left: -40px; margin-bottom: -5px;">Message</a>
+
+                        <div class="notification-container" style="display: inline-block; text-align: left;">
+                            <button id="notificationButton" class="btn btn-primary"
+                                    style="padding: 5px 10px; font-size: 10px; width: auto; margin-bottom: -5px;">
+                                Notifications
+                            </button>
+                            <div id="notificationDropdown" class="dropdown-content" style="display: none;">
+                                <ul>
+                                    @php
+                                        $notifications = \App\Models\Notification::with('user')
+                                            ->where('user_id', Auth::id())
+                                            ->where('is_read', 1)
+                                            ->get();
+                                    @endphp
+                                    @forelse($notifications as $notification)
+                                        <li>
+                                            @if($notification->type == 'blog')
+                                                <a href="{{ route('notification.read', ['id' => $notification->id]) }}">
+                                                    {{ $notification->user->name }} blogu beğendi
+                                                </a>
+
+                                            @elseif($notification->type == 'comment')
+                                                <a href="{{ route('comments.show', $notification->entity_id) }}">
+                                                    Yorum yapıldı
+                                                </a>
+                                            @endif
+                                        </li>
+                                    @empty
+                                        <li>Hiç bildirim yok.</li>
+                                    @endforelse
+                                </ul>
+                            </div>
+                        </div>
                         @endif
 
-                            @if(Auth::check())
-                                <div class="notification-container" style="display: inline-block; text-align: left;">
-                                    <button id="notificationButton" class="btn btn-primary"
-                                            style="padding: 5px 10px; font-size: 10px; width: auto; margin-bottom: -5px;">
-                                        Notifications
-                                    </button>
-                                    <div id="notificationDropdown" class="dropdown-content" style="display: none;">
-                                        <ul>
-                                            @php
-                                                $notifications = \App\Models\Notification::where('user_id', Auth::id())
-             ->where('is_read', 1)
-             ->get();
 
 
-                                            @endphp
-                                            @forelse($notifications as $notification)
-                                                <li>
-                                                    @if($notification->type == 'blog')
-                                                        <a href="{{ route('blogs.show', $notification->entity_id) }}">Blog beğenildi </a>
-                                                    @elseif($notification->type == 'comment')
-                                                        <a href="{{ route('comments.show', $notification->entity_id) }}">Yorum yapıldı</a>
-                                                    @endif
-                                                </li>
-                                            @empty
-                                                <li>Hiç bildirim yok.</li>
-                                            @endforelse
-                                        </ul>
-                                    </div>
-                                </div>
-                            @endif
 
-                    </div>
-
-                    <li class="list-inline-item">
+                        <li class="list-inline-item">
                         <div class="search_toggle mobile-search d-md-block d-lg-none "><i class="ti-search "></i></div>
 
 

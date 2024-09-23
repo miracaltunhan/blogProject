@@ -82,3 +82,4 @@ Route::post('/blogs/{id}/comments', [BlogController::class, 'storeComment'])->na
 Route::resource('categories', CategoryController::class);
 Route::get('/notifications', [NotificationController::class, 'getNotifications'])->name('notifications');
 Route::get('/messages/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('messages.markAsRead');
+Route::get('/notification/{id}/read', [NotificationController::class, 'markAsRead'])->name('notification.read');

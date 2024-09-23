@@ -31,6 +31,13 @@
             </div>
         @endif
 
+        <h2>Liked by:</h2>
+        <ul>
+            @foreach($blog->likes as $user)
+                <li>{{ $user->name }}</li>
+            @endforeach
+        </ul>
+
         <h2>Comments</h2>
         @foreach($blog->comments as $comment)
             <p><strong>{{ $comment->user->name }}:</strong> {{ $comment->content }}</p>

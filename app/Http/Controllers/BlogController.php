@@ -40,7 +40,7 @@ class BlogController extends Controller
         $blog = new Blog($request->except('image'));
 
 
-        $blog->author_id=\auth()->id();
+        $blog->author_id = \auth()->id();
 
         // Eğer bir görsel yüklendiyse, dosyayı kaydet
         if ($request->hasFile('image')) {
@@ -94,6 +94,7 @@ class BlogController extends Controller
         return redirect()->route('blogs.index')->with('success', 'Blog deleted successfully.');
 
     }
+
     public function showBlogs()
     {
         $blogs = Blog::with('category', 'author')->get();
@@ -133,7 +134,7 @@ class BlogController extends Controller
         // Bildirim oluştur
         Notification::create([
             'user_id' => $blogOwnerId, // Blogun sahibinin ID'si
-            'like_id'=>\auth()->id(),
+            'like_id' => \auth()->id(),
             'type' => 'blog',
             'entity_id' => $id,
         ]);
@@ -144,26 +145,37 @@ class BlogController extends Controller
 
     public function storeComment(Request $request, $id)
     {
+        // Kullanıcının giriş yapıp yapmadığını kontrol et
+        if (!auth()->check()) {
+            return back()->with('error', 'You must be logged in to comment.');
+        }
+
         $request->validate([
             'content' => 'required|string|max:255',
-            'blog_id' => 'required|exists:blogs,id',
-            'user_id' => 'required|exists:users,id',
         ]);
 
-        Comment::create([
-            'blog_id' => $request->blog_id,
-            'user_id' => $request->user_id,
-            'content' => $request->content,
+        // Kullanıcının kimliğini al
+        $userId = auth()->id();
+
+        // Yorum oluştur
+        $comment = Comment::create([
+            'blog_id' => $id,
+            'user_id' => $userId,
+            'content' => $request->input('content'),
         ]);
 
-        // Bildirim oluştur
-        $blogOwnerId = Blog::find($id)->user_id; // Yorum yapılan blogun sahibinin ID'si
-        Notification::create([
-            'user_id' => $blogOwnerId,
-            'type' => 'comment',
-            'entity_id' => $comment->id, // Yorumun ID'si
-        ]);
+        // Yorum yapan kullanıcının kimliğini al ve kontrol et
+        $blogOwnerId = Blog::find($id)->user_id;
+        if ($blogOwnerId) {
+            Notification::create([
+                'user_id' => $blogOwnerId,
+                'type' => 'comment',
+                'entity_id' => $comment->id,
+            ]);
+        }
 
         return back()->with('success', 'Comment added successfully!');
     }
+
+
 }
