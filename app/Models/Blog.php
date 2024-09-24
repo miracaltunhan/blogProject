@@ -24,8 +24,7 @@ class Blog extends Model
      */
     public function author()
     {
-        return $this->belongsTo(Author::class);
-    }
+        return $this->belongsTo(User::class, 'author_id');    }
     public function likes()
     {
         return $this->belongsToMany(User::class, 'likes'); // 'likes' tablosu

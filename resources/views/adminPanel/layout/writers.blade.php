@@ -180,13 +180,16 @@
                         @foreach($authors as $author)
                             <div class="sidebar-widget about mb-5 text-center p-3">
                                 <div class="about-author">
-                                    <img src="{{ asset('adminPanel/images/' . $author->image) }}" alt="" class="img-fluid">
+                                    <a href="{{ route('author.blogs', $author->id) }}">
+                                        <img src="{{ asset('adminPanel/images/' . $author->image) }}" alt="" class="img-fluid">
+                                    </a>
                                 </div>
                                 <h4 class="mb-0 mt-4">{{ $author->name }}</h4>
                                 <p>{{ $author->title }}</p>
                                 <p>{{ $author->bio }}</p>
                             </div>
                         @endforeach
+
 
                         <!--
                       </div>
