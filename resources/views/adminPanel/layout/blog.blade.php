@@ -158,34 +158,57 @@
             </div>
         </div>
     </div>
-</div>
-
-
-<section class="section-padding ">
+</div><section class="section-padding">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6 col-md-6">
-                <div class="row">
-                    @if($blogs->isEmpty())
-                        <p>Henüz blog yok.</p>
-                    @else
-                        @foreach($blogs as $blog)
-                            <div class="col-lg-6 col-md-6">
-                                <article class="post-grid mb-5">
-                                    <div class="post-thumb mb-4">
-                                        <img src="{{ asset('storage/app/images/' . $blog->image) }}" alt="{{ $blog->title }}" class="img-fluid w-100">
-                                    </div>
-                                    <span class="cat-name text-color font-extra text-sm text-uppercase letter-spacing-1">{{ $blog->category->name }}</span>
-                                    <h3 class="post-title mt-1">
-                                            <a href="{{ route('blog.single', $blog->id) }}">{{ $blog->title }}</a>
-                                    </h3>
-                                    <span class="text-muted text-capitalize">{{ $blog->created_at->format('F j, Y') }}</span>
-                                </article>
-                            </div>
-                        @endforeach
-                    @endif
-                </div>
+            <div class="col-12 mb-4 text-center">
+                <!-- Beğeniye Göre Sırala Butonu -->
+                <a href="{{ route('blogs.sortByLikes') }}" class="btn btn-primary">
+                    Beğeniye Göre Sırala
+                </a>
             </div>
+
+            @if($blogs->isEmpty())
+                <div class="col-12">
+                    <p class="text-center">Henüz blog yok.</p>
+                </div>
+            @else
+                @foreach($blogs as $blog)
+                    <div class="col-lg-6 col-md-6 mb-4">
+                        <article class="post-grid">
+                            <div class="post-thumb mb-4">
+                                <!-- Blog Görseli -->
+                                <img src="{{ asset('storage/app/images/' . $blog->image) }}"
+                                     alt="{{ $blog->title }}"
+                                     class="img-fluid w-100"
+                                     style="height: 300px; object-fit: cover;">
+                            </div>
+
+                            <!-- Kategori Adı -->
+                            <span class="cat-name text-color font-extra text-sm text-uppercase letter-spacing-1 d-block mb-2">
+                                {{ $blog->category->name }}
+                            </span>
+
+                            <!-- Blog Başlığı -->
+                            <h3 class="post-title mt-1 mb-3">
+                                <a href="{{ route('blog.single', $blog->id) }}" class="text-dark">
+                                    {{ $blog->title }}
+                                </a>
+                            </h3>
+
+                            <!-- Oluşturulma Tarihi -->
+                            <span class="text-muted text-capitalize d-block mb-2">
+                                {{ $blog->created_at->format('F j, Y') }}
+                            </span>
+
+                            <!-- Beğeni Sayısı -->
+                            <p class="text-muted">
+                                Beğeni Sayısı: {{ $blog->likes_count }}
+                            </p>
+                        </article>
+                    </div>
+                @endforeach
+            @endif
         </div>
     </div>
 </section>

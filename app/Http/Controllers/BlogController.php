@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Like;
 use App\Models\Comment;
 use App\Models\Notification;
+
 class BlogController extends Controller
 {
     public function index()
@@ -29,29 +30,26 @@ class BlogController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'category_id' => 'nullable|exists:categories,id',
-            'author_id' => 'nullable|exists:authors,id',
-            'image' => 'nullable|image',
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Görsel validasyonu
         ]);
 
-        // Blog verilerini oluşturuyoruz
-        $blog = new Blog($request->except('image'));
-
-
-        $blog->author_id = \auth()->id();
-
-        // Eğer bir görsel yüklendiyse, dosyayı kaydet
+        // Görsel yükleme işlemi
+        $imagePath = null;
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('images');
-            $blog->image = $path;
+            $imagePath = $request->file('image')->store('images', 'public'); // 'public' diskine kaydet
         }
 
-        $blog->save();
+        News::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'image' => $imagePath, // Görsel yolu
+        ]);
 
-        return redirect()->route('blogs.index')->with('success', 'Blog başarıyla oluşturuldu.');
+        return redirect()->route('news.index')->with('success', 'Haber başarıyla eklendi.');
     }
+
 
     public function show($id)
     {
@@ -98,7 +96,7 @@ class BlogController extends Controller
     public function showBlogs()
     {
         $blogs = Blog::with('category', 'author')->get();
-        return view('adminPanel.layout.blog', compact('blogs')); // 'blogs.index' adında bir view oluşturmalısınız
+        return view('adminPanel.layout.blog', compact('blogs'));
     }
 
 
@@ -114,18 +112,15 @@ class BlogController extends Controller
             ->first();
 
         if ($existingLike) {
-            // Bu blogu beğenen kişilerin isimlerini al
             $likers = Like::where('blog_id', $id)
                 ->with('user') // User ilişkisini getir
                 ->get()
                 ->pluck('user.name') // User isimlerini al
                 ->toArray();
 
-            // Kullanıcıya beğenenlerin isimlerini göster
             return back()->with('error', 'You have already liked this blog. People who liked this blog: ' . implode(', ', $likers));
         }
 
-        // Eğer beğenmemişse beğeni oluştur
         Like::create([
             'blog_id' => $id,
             'user_id' => $userId,
@@ -145,7 +140,6 @@ class BlogController extends Controller
 
     public function storeComment(Request $request, $id)
     {
-        // Kullanıcının giriş yapıp yapmadığını kontrol et
         if (!auth()->check()) {
             return back()->with('error', 'You must be logged in to comment.');
         }
@@ -154,17 +148,14 @@ class BlogController extends Controller
             'content' => 'required|string|max:255',
         ]);
 
-        // Kullanıcının kimliğini al
         $userId = auth()->id();
 
-        // Yorum oluştur
         $comment = Comment::create([
             'blog_id' => $id,
             'user_id' => $userId,
             'content' => $request->input('content'),
         ]);
 
-        // Yorum yapan kullanıcının kimliğini al ve kontrol et
         $blogOwnerId = Blog::find($id)->user_id;
         if ($blogOwnerId) {
             Notification::create([
@@ -175,6 +166,14 @@ class BlogController extends Controller
         }
 
         return back()->with('success', 'Comment added successfully!');
+    }
+    public function sortByLikes()
+    {
+        $blogs = Blog::withCount('likes')
+            ->orderBy('likes_count', 'desc')
+            ->get();
+
+        return view('adminPanel.layout.blog', compact('blogs'));
     }
 
 

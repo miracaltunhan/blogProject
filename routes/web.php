@@ -83,6 +83,12 @@ Route::get('/notifications', [NotificationController::class, 'getNotifications']
 Route::get('/messages/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('messages.markAsRead');
 Route::get('/notification/{id}/read', [NotificationController::class, 'markAsRead'])->name('notification.read');
 Route::get('/author/{id}/blogs', [AuthorController::class, 'showBlogs'])->name('author.blogs');
+Route::get('/blogs/sort-by-likes', [BlogController::class, 'sortByLikes'])->name('blogs.sortByLikes');
+Route::get('/blogs/sort-by-likes', [BlogController::class, 'sortByLikes'])->name('blogs.sortByLikes');
+Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+Route::resource('news', NewsController::class);
+
+
 
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
