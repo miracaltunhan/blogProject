@@ -12,8 +12,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\UserController;
-
-
+use App\Http\Controllers\Auth\VerifyEmailController;
 
 Route::middleware(['auth'])->group(function () {
     // Admin için dashboard yönlendirmesi
@@ -73,7 +72,7 @@ Route::get('/blog', [BlogController::class, 'showBlogs'])->name('blogs.show');
 require __DIR__.'/auth.php';
 
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('register', [RegisterController::class, 'register']);
+Route::post('create', [RegisterController::class, 'create'])->name('create');
 Route::get('/author/{id}', [AuthorController::class, 'show']);
 Route::get('/dashboard/users', [UserController::class, 'index'])->name('dashboard.users');
 Route::post('/users/promote/{id}', [UserController::class, 'promoteToWriter'])->name('users.promote');
@@ -84,3 +83,17 @@ Route::get('/notifications', [NotificationController::class, 'getNotifications']
 Route::get('/messages/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('messages.markAsRead');
 Route::get('/notification/{id}/read', [NotificationController::class, 'markAsRead'])->name('notification.read');
 Route::get('/author/{id}/blogs', [AuthorController::class, 'showBlogs'])->name('author.blogs');
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+// E-posta doğrulama işlemi
+Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
+    ->middleware(['auth', 'signed'])
+    ->name('verification.verify');
+
+// Doğrulama e-postası yeniden gönderme
+Route::post('/email/verification-notification', [VerifyEmailController::class, 'send'])
+    ->middleware(['auth'])
+    ->name('verification.send');
