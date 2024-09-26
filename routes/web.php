@@ -33,7 +33,6 @@ Route::middleware(['auth'])->group(function () {
     });
 
 
-
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
     Route::get('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
 });
@@ -87,7 +86,7 @@ Route::get('/blogs/sort-by-likes', [BlogController::class, 'sortByLikes'])->name
 Route::get('/blogs/sort-by-likes', [BlogController::class, 'sortByLikes'])->name('blogs.sortByLikes');
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::resource('news', NewsController::class);
-
+Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
 
 
 Route::get('/email/verify', function () {

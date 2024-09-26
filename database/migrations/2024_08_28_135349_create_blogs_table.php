@@ -12,22 +12,22 @@ return new class extends Migration
     public function up()
     {
         Schema::create('blogs', function (Blueprint $table) {
-            // Blog tablosuna id kolonunu ekliyoruz
+
             $table->id();
 
-            // Blog başlığı ve içeriği için gerekli kolonları oluşturuyoruz
+
             $table->string('title');
             $table->text('content');
 
-            // Blog görseli için opsiyonel bir kolon (nullable)
+
             $table->string('image')->nullable();
 
-            // 'categories' tablosuna dış anahtar referansı ekliyoruz
+
             $table->foreignId('category_id')->nullable()
                 ->constrained('categories')
-                ->onDelete('set null'); // Kategori silinirse null yap
+                ->onDelete('set null');
 
-            $table->unsignedBigInteger('author_id')->nullable(); // author_id alanı nullable
+            $table->unsignedBigInteger('author_id')->nullable(); 
             $table->foreign('author_id')
                 ->references('id')
                 ->on('users')

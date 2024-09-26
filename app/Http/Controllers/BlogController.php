@@ -17,7 +17,7 @@ class BlogController extends Controller
     {
         $blogs = Blog::with('category', 'author')->get();
 
-        return view('dashboard.index', compact('blogs'));
+        return view('adminPanel.layout.blog', compact('blogs'));
     }
 
     public function create()
@@ -41,13 +41,13 @@ class BlogController extends Controller
             $imagePath = $request->file('image')->store('images', 'public'); // 'public' diskine kaydet
         }
 
-        News::create([
+        Blog::create([
             'title' => $request->title,
-            'content' => $request->content,
+            'content' => request('content'),
             'image' => $imagePath, // Görsel yolu
         ]);
 
-        return redirect()->route('news.index')->with('success', 'Haber başarıyla eklendi.');
+        return redirect()->route('blogs.index')->with('success', 'Blog başarıyla eklendi.');
     }
 
 
@@ -133,7 +133,7 @@ class BlogController extends Controller
             'type' => 'blog',
             'entity_id' => $id,
         ]);
-        dd("dsf");
+
 
         return back()->with('success', 'Blog liked successfully!');
     }

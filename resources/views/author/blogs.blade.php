@@ -1,16 +1,20 @@
 <h1>{{ $author->name }}'nin Blogları</h1>
 
-@if(isset($blogs))
-    @if($blogs->isEmpty())
-        <p>Bu yazarın henüz blogu yok.</p>
+@if($author)
+    @if(isset($blogs))
+        @if($blogs->isEmpty())
+            <p>Bu yazarın henüz blogu yok.</p>
+        @else
+            @foreach($blogs as $blog)
+                <div>
+                    <h2>{{ $blog->title }}</h2>
+                    <p>{{ $blog->content }}</p>
+                </div>
+            @endforeach
+        @endif
     @else
-        @foreach($blogs as $blog)
-            <div>
-                <h2>{{ $blog->title }}</h2>
-                <p>{{ $blog->content }}</p>
-            </div>
-        @endforeach
+        <p>Bloglar bulunamadı.</p>
     @endif
 @else
-    <p>Bloglar bulunamadı.</p>
+    <p>Yazar bilgisi mevcut değil.</p>
 @endif

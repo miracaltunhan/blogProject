@@ -177,18 +177,23 @@
                             <img src="images/liammason.png" alt="" class="img-fluid">
                         </div>
 
-                        @foreach($authors as $author)
-                            <div class="sidebar-widget about mb-5 text-center p-3">
-                                <div class="about-author">
-                                    <a href="{{ route('author.blogs', $author->id) }}">
-                                        <img src="{{ asset('adminPanel/images/' . $author->image) }}" alt="" class="img-fluid">
-                                    </a>
+                        @if($authors->isEmpty())
+                            <p>Yazar bulunamadı.</p>
+                        @else
+                            @foreach($authors as $author)
+                                <div class="sidebar-widget about mb-5 text-center p-3">
+                                    <div class="about-author">
+                                        <a href="{{ route('author.blogs', $author->id) }}">
+                                            <img src="{{ asset('adminPanel/images/' . ($author->image ?: 'default.jpg')) }}" alt="" class="img-fluid">
+                                        </a>
+                                    </div>
+                                    <h4 class="mb-0 mt-4">{{ $author->name }}</h4>
+                                    <p>{{ $author->title }}</p>
+                                    <p>{{ $author->bio }}</p>
                                 </div>
-                                <h4 class="mb-0 mt-4">{{ $author->name }}</h4>
-                                <p>{{ $author->title }}</p>
-                                <p>{{ $author->bio }}</p>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        @endif
+
 
 
                         <!--

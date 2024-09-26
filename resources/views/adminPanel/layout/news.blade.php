@@ -166,83 +166,34 @@
         <div class="row">
             <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <article class="post-grid mb-5">
-                            <div class="post-thumb mb-4">
-                                <img src="{{asset('adminPanel/images/news/f1.jpg')}}" alt="" class="img-fluid w-100">
-                            </div>
-                            <span class="cat-name text-color font-extra text-sm text-uppercase letter-spacing-1"></span>
-                            <h3 class="post-title mt-1"><a href="blog-single.html">Autonomous Vehicles and the Technologies Revolutionizing Transportation
+                    <!-- Haberleri döngü ile listeleme -->
+                    @foreach($news as $item)
+                        <div class="col-lg-6 col-md-6 mb-4">
+                            <article class="post-grid mb-5">
+                                <div class="post-thumb mb-4">
+                                    <!-- Eğer görsel varsa, göster -->
+                                    @if($item->image)
+                                        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" class="img-fluid w-100">
+                                    @else
+                                        <img src="{{ asset('adminPanel/images/news/f1.jpg') }}" alt="Varsayılan Görsel" class="img-fluid w-100">
+                                    @endif
+                                </div>
+                                <span class="cat-name text-color font-extra text-sm text-uppercase letter-spacing-1"></span>
+                                <h3 class="post-title mt-1">
+                                    <a href="{{ route('news.show', $item->id) }}">{{ $item->title }}</a>                                </h3>
+                                <span class="text-muted text-capitalize">
+                                <!-- Yayın tarihini göster -->
+                                {{ $item->published_at ? $item->published_at->format('F d, Y') : 'Yayın tarihi yok' }}
+                            </span>
+                            </article>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-
-
-
-
-                                </a></h3>
-
-                            <span class=" text-muted  text-capitalize">September 15, 2019</span>
-
-                        </article>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <article class="post-grid mb-5">
-                            <div class="post-thumb mb-4">
-                                <img src="{{asset('adminPanel/images/news/f2.jpg')}}" alt="" class="img-fluid w-100">
-                            </div>
-                            <span class="cat-name text-color font-sm font-extra text-uppercase letter-spacing"></span>
-                            <h3 class="post-title mt-1"><a href="blog-single.html">A New Era in Cybersecurity: Major Advances in Protection Methods
-                                </a></h3>
-
-                            <span class=" text-muted  text-capitalize">August 05, 2019</span>
-
-                        </article>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <article class="post-grid mb-5">
-                            <div class="post-thumb mb-4">
-                                <img src="{{asset('adminPanel/images/news/f8.jpg')}}" alt="" class="img-fluid w-100">
-                            </div>
-                            <span class=" cat-name text-color font-sm font-extra text-uppercase letter-spacing"></span>
-                            <h3 class="post-title mt-1"><a href="blog-single.html">The Impact of the Metaverse on Business: What Awaits Us in the Future?</a></h3>
-
-                            <span class=" text-muted  text-capitalize">April 22, 2019</span>
-
-                        </article>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <article class="post-grid mb-5">
-                            <div class="post-thumb mb-4">
-                                <img src="{{asset('adminPanel/images/news/f3.jpg')}}" alt="" class="img-fluid w-100">
-                            </div>
-                            <span class="cat-name text-color font-sm font-extra text-uppercase letter-spacing"></span>
-                            <h3 class="post-title mt-1"><a href="blog-single.html">New AI Technology Transforming the Business World
-                                </a></h3>
-
-                            <span class=" text-muted  text-capitalize">September 10, 2019</span>
-
-                        </article>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <article class="post-grid mb-5">
-                            <div class="post-thumb mb-4">
-                                <img src="{{asset('adminPanel/images/news/f4.jpg')}}" alt="" class="img-fluid w-100">
-                            </div>
-                            <span class="cat-name text-color font-sm font-extra text-uppercase letter-spacing"></span>
-                            <h3 class="post-title mt-1"><a href="blog-single.html">Smart Cities: How the Cities of the Future Are Taking Shape</a></h3>
-
-                            <span class=" text-muted  text-capitalize">January 04, 2019</span>
-
-                        </article>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <article class="post-grid mb-5">
-                            <div class="post-thumb mb-4">
-                                <img src="{{asset('adminPanel/images/news/f5.jpg')}}" alt="" class="img-fluid w-100">
-                            </div>
-                            <span class="cat-name text-color font-sm font-extra text-uppercase letter-spacing"></span>
-                            <h3 class="post-title mt-1"><a href="blog-single.html">Recent Developments in Renewable Energy Technologies</a></h3>
-
-                            <span class=" text-muted  text-capitalize">March 17, 2019</span>
 
                       <!--  </article>
                     </div>
