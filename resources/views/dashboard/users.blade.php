@@ -27,13 +27,30 @@
         <tr>
             <td>{{ $user->id }}</td>
             <td>{{ $user->name }}</td>
-            <td>{{ $user->role }}</td>
             <td>
-                <form action="{{ route('users.promote', $user->id) }}" method="POST">
-                    @csrf
-                    <input type="text" name="title" placeholder="Yeni Title" required>
-                    <button type="submit">Yazara Terfi Et</button>
-                </form>
+                @if ($user->role == 2)
+                    Writer
+                @elseif ($user->role == 3)
+                    User
+                @else
+                    Diğer
+                @endif
+            </td>
+            <td>
+                @if ($user->role == 3)
+                    <!-- Kullanıcı (role 3) ise Yazara Terfi Et ve Yeni Title alanı -->
+                    <form action="{{ route('users.promote', $user->id) }}" method="POST">
+                        @csrf
+                        <input type="text" name="title" placeholder="Yeni Title" required>
+                        <button type="submit">Yazara Terfi Et</button>
+                    </form>
+                @elseif ($user->role == 2)
+                    <!-- Writer (role 2) ise User'a Terfi Et butonu -->
+                    <form action="{{ route('users.demote', $user->id) }}" method="POST">
+                        @csrf
+                        <button type="submit">User'a Terfi Et</button>
+                    </form>
+                @endif
             </td>
         </tr>
     @endforeach
