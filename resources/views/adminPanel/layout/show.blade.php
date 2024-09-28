@@ -40,11 +40,35 @@
 
         <h2>Comments</h2>
         @foreach($blog->comments as $comment)
-            <p><strong>{{ $comment->user->name }}:</strong> {{ $comment->content }}</p>
+            <div class="comment">
+                <p><strong>{{ $comment->user->name }}:</strong> {{ $comment->content }}</p>
+                <form action="{{ route('comments.like', $comment->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-light">Like ({{ $comment->likes_count }})</button>
+                </form>
+
+                <h4>Replies:</h4>
+                @foreach($comment->replies as $reply)
+                    <p><strong>{{ $reply->user->name }}:</strong> {{ $reply->content }}</p>
+                @endforeach
+
+                <form action="{{ route('comments.store', $blog->id) }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="user_id" value="{{ auth()->id() }}"> <!-- Kullanıcı ID'sini ekleyin -->
+                    <input type="hidden" name="blog_id" value="{{ $blog->id }}"> <!-- Blog ID'sini ekleyin -->
+                    <div class="form-group">
+                        <textarea name="content" class="form-control" rows="2" placeholder="Reply to this comment" required></textarea>
+                        <input type="hidden" name="parent_id" value="{{ $comment->id }}"> <!-- Yanıt için parent_id -->
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Reply</button>
+                </form>
+            </div>
         @endforeach
 
         <form action="{{ route('comments.store', $blog->id) }}" method="POST">
             @csrf
+            <input type="hidden" name="user_id" value="{{ auth()->id() }}"> <!-- Kullanıcı ID'sini ekleyin -->
+            <input type="hidden" name="blog_id" value="{{ $blog->id }}"> <!-- Blog ID'sini ekleyin -->
             <div class="form-group">
                 <textarea name="content" class="form-control" rows="3" placeholder="Add a comment" required></textarea>
             </div>

@@ -13,6 +13,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\CommentController;
 
 Route::middleware(['auth'])->group(function () {
     // Admin için dashboard yönlendirmesi
@@ -83,11 +84,11 @@ Route::get('/messages/mark-as-read/{id}', [NotificationController::class, 'markA
 Route::get('/notification/{id}/read', [NotificationController::class, 'markAsRead'])->name('notification.read');
 Route::get('/author/{id}/blogs', [AuthorController::class, 'showBlogs'])->name('author.blogs');
 Route::get('/blogs/sort-by-likes', [BlogController::class, 'sortByLikes'])->name('blogs.sortByLikes');
-Route::get('/blogs/sort-by-likes', [BlogController::class, 'sortByLikes'])->name('blogs.sortByLikes');
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::resource('news', NewsController::class);
 Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
-
+Route::post('/blog/{blogId}/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::post('/comments/{commentId}/like', [CommentController::class, 'like'])->name('comments.like');
 
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
