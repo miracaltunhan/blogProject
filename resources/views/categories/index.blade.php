@@ -7,6 +7,13 @@
         @foreach ($categories as $category)
             <li>
                 {{ $category->name }}
+                @if ($category->subcategories->isNotEmpty())
+                    (
+                    @foreach ($category->subcategories->unique('name') as $index => $subcategory)
+                        {{ $subcategory->name }}@if (!$loop->last) / @endif
+                    @endforeach
+                    )
+                @endif
                 <form action="{{ route('categories.destroy', $category) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')

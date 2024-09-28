@@ -10,6 +10,15 @@
 
         <div class="blog-meta">
             <p><strong>Category:</strong> {{ $blog->category->name }}</p>
+
+            @if($blog->category->subcategories->isNotEmpty())
+                <p><strong>Subcategories:</strong>
+                    @foreach($blog->category->subcategories as $subcategory)
+                        {{ $subcategory->name }}@if (!$loop->last), @endif
+                    @endforeach
+                </p>
+            @endif
+
             <p><strong>Author:</strong> {{ $blog->author_name }}</p>
             <p><strong>Published at:</strong> {{ $blog->created_at->format('d M Y') }}</p>
         </div>
@@ -54,11 +63,11 @@
 
                 <form action="{{ route('comments.store', $blog->id) }}" method="POST">
                     @csrf
-                    <input type="hidden" name="user_id" value="{{ auth()->id() }}"> <!-- Kullanıcı ID'sini ekleyin -->
-                    <input type="hidden" name="blog_id" value="{{ $blog->id }}"> <!-- Blog ID'sini ekleyin -->
+                    <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+                    <input type="hidden" name="blog_id" value="{{ $blog->id }}">
                     <div class="form-group">
                         <textarea name="content" class="form-control" rows="2" placeholder="Reply to this comment" required></textarea>
-                        <input type="hidden" name="parent_id" value="{{ $comment->id }}"> <!-- Yanıt için parent_id -->
+                        <input type="hidden" name="parent_id" value="{{ $comment->id }}">
                     </div>
                     <button type="submit" class="btn btn-secondary">Reply</button>
                 </form>
@@ -67,8 +76,8 @@
 
         <form action="{{ route('comments.store', $blog->id) }}" method="POST">
             @csrf
-            <input type="hidden" name="user_id" value="{{ auth()->id() }}"> <!-- Kullanıcı ID'sini ekleyin -->
-            <input type="hidden" name="blog_id" value="{{ $blog->id }}"> <!-- Blog ID'sini ekleyin -->
+            <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+            <input type="hidden" name="blog_id" value="{{ $blog->id }}">
             <div class="form-group">
                 <textarea name="content" class="form-control" rows="3" placeholder="Add a comment" required></textarea>
             </div>

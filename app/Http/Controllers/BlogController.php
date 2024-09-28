@@ -15,10 +15,12 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $blogs = Blog::with('category', 'author')->get();
+        // Kategorileri ve alt kategorileri yükle
+        $blogs = Blog::with(['category', 'category.subcategories', 'author'])->get();
 
         return view('adminPanel.layout.blog', compact('blogs'));
     }
+
 
     public function create()
     {
@@ -33,6 +35,7 @@ class BlogController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Görsel validasyonu
+            'category_id' => 'required|exists:categories,id', // Kategori ID'sinin varlığını kontrol et
         ]);
 
         // Görsel yükleme işlemi
@@ -45,10 +48,12 @@ class BlogController extends Controller
             'title' => $request->title,
             'content' => request('content'),
             'image' => $imagePath, // Görsel yolu
+            'category_id' => $request->category_id, // Kategori ID'sini ekle
         ]);
 
         return redirect()->route('blogs.index')->with('success', 'Blog başarıyla eklendi.');
     }
+
 
 
     public function show($id)
@@ -140,24 +145,34 @@ class BlogController extends Controller
 
     public function storeComment(Request $request, $id)
     {
+        // Oturum kontrolü middleware ile yapılabilir, gerekirse bu adımı middleware'e taşıyabilirsiniz.
         if (!auth()->check()) {
             return back()->with('error', 'You must be logged in to comment.');
         }
 
+        // Girdi doğrulama işlemi
         $request->validate([
             'content' => 'required|string|max:255',
+        ], [
+            'content.required' => 'Comment content is required.',
+            'content.string' => 'Comment must be a string.',
+            'content.max' => 'Comment can not exceed 255 characters.',
         ]);
 
+        // Kullanıcı kimliği alma
         $userId = auth()->id();
 
+        // Yorum oluşturma
         $comment = Comment::create([
             'blog_id' => $id,
             'user_id' => $userId,
             'content' => $request->input('content'),
         ]);
 
-        $blogOwnerId = Blog::find($id)->user_id;
-        if ($blogOwnerId) {
+        // Blog sahibini bulma ve bildirim oluşturma
+        $blog = Blog::find($id);
+        if ($blog && $blog->user_id) {
+            $blogOwnerId = $blog->user_id;
             Notification::create([
                 'user_id' => $blogOwnerId,
                 'type' => 'comment',
@@ -165,8 +180,11 @@ class BlogController extends Controller
             ]);
         }
 
-        return back()->with('success', 'Comment added successfully!');
+        // Kullanıcıya geri bildirim mesajı döndürme
+        return back()->with('success', 'Your comment has been added successfully.');
     }
+
+
     public function sortByLikes()
     {
         $blogs = Blog::withCount('likes')

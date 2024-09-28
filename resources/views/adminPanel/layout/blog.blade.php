@@ -158,7 +158,8 @@
             </div>
         </div>
     </div>
-</div><section class="section-padding">
+</div>
+<section class="section-padding">
     <div class="container">
         <div class="row">
             <div class="col-12 mb-4 text-center">
@@ -178,16 +179,33 @@
                         <article class="post-grid">
                             <div class="post-thumb mb-4">
                                 <!-- Blog Görseli -->
-                                <img src="{{ asset('storage/app/images/' . $blog->image) }}"
+                                <img src="{{ asset('storage/' . $blog->image) }}"
                                      alt="{{ $blog->title }}"
                                      class="img-fluid w-100"
                                      style="height: 300px; object-fit: cover;">
                             </div>
 
-                            <!-- Kategori Adı -->
+                            <!-- Kategori Adı ve Alt Kategorileri -->
                             <span class="cat-name text-color font-extra text-sm text-uppercase letter-spacing-1 d-block mb-2">
-                                {{ $blog->category->name }}
-                            </span>
+    @if($blog->category)
+                                    <!-- Üst Kategori -->
+                                    @if($blog->category->parentCategory)
+                                        {{ $blog->category->parentCategory->name }} /
+                                    @endif
+                                    <!-- Alt Kategori -->
+                                    {{ $blog->category->name }}
+
+                                    @if($blog->category->subCategories->isNotEmpty())
+                                        /
+                                        @foreach($blog->category->subCategories as $subcategory)
+                                            {{ $subcategory->name }}@if (!$loop->last), @endif
+                                        @endforeach
+                                    @endif
+                                @else
+                                    Kategori Belirtilmemiş
+                                @endif
+</span>
+
 
                             <!-- Blog Başlığı -->
                             <h3 class="post-title mt-1 mb-3">
@@ -214,8 +232,7 @@
 </section>
 
 
-
-                    </div>
+</div>
                 </div>
 
                 <div class="pagination mt-5 pt-4">

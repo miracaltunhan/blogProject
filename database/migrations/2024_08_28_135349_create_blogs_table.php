@@ -23,11 +23,12 @@ return new class extends Migration
             $table->string('image')->nullable();
 
 
-            $table->foreignId('category_id')->nullable()
+            $table->foreignId('category_id')
                 ->constrained('categories')
-                ->onDelete('set null');
+                ->onDelete('set null'); // Kategori silinirse null yap
 
-            $table->unsignedBigInteger('author_id')->nullable(); 
+
+            $table->unsignedBigInteger('author_id')->nullable();
             $table->foreign('author_id')
                 ->references('id')
                 ->on('users')
