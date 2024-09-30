@@ -25,26 +25,25 @@ Route::middleware(['auth'])->group(function () {
         return redirect('/home');
     })->name('dashboard');
 
-
+    // Profil
     Route::view('profile', 'profile')->name('profile');
 
-    Route::middleware(['auth'])->group(function () {
-        Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
-        Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
-    });
+    // Mesajlar
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+    Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
 
-
+    // Bildirimler
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
     Route::get('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
 });
 
 Route::middleware(['auth', RoleCheck::class])->group(function () {
+    // Blog Yönetimi
     Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
     Route::get('/blogs/create', [BlogController::class, 'create'])->name('blogs.create');
     Route::get('blogs/{blog}/edit', [BlogController::class, 'edit'])->name('blogs.edit');
-    Route::get('blogs/{blog}/destroy', [BlogController::class, 'edit'])->name('blogs.destroy');
+    Route::get('blogs/{blog}/destroy', [BlogController::class, 'destroy'])->name('blogs.destroy');
     Route::get('/blog/{id}', [BlogController::class, 'show'])->name('blog.single');
-
 });
 
 Route::get('/home', function () {
@@ -72,34 +71,47 @@ require __DIR__.'/auth.php';
 
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('create', [RegisterController::class, 'create'])->name('create');
+
 Route::get('/author/{id}', [AuthorController::class, 'show']);
+
 Route::get('/dashboard/users', [UserController::class, 'index'])->name('dashboard.users');
 Route::post('/users/promote/{id}', [UserController::class, 'promoteToWriter'])->name('users.promote');
+
 Route::post('/blogs/{id}/like', [BlogController::class, 'likeBlog'])->name('blogs.like');
 Route::post('/blogs/{id}/comments', [BlogController::class, 'storeComment'])->name('comments.store');
+
 Route::resource('categories', CategoryController::class);
+
 Route::get('/notifications', [NotificationController::class, 'getNotifications'])->name('notifications');
 Route::get('/messages/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('messages.markAsRead');
 Route::get('/notification/{id}/read', [NotificationController::class, 'markAsRead'])->name('notification.read');
+
 Route::get('/author/{id}/blogs', [AuthorController::class, 'showBlogs'])->name('author.blogs');
+
 Route::get('blogs/sort-by-likes', [BlogController::class, 'sortByLikes'])->name('blogs.sortByLikes');
+
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::resource('news', NewsController::class);
 Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
+
 Route::post('/blog/{blogId}/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::post('/comments/{commentId}/like', [CommentController::class, 'like'])->name('comments.like');
+
 Route::get('/subcategories/{id}', [CategoryController::class, 'getSubcategories']);
 
+Route::post('/blogs', [BlogController::class, 'store'])->name('blogs.store');
+
+
+
+// E-posta doğrulama
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
-// E-posta doğrulama işlemi
 Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
     ->middleware(['auth', 'signed'])
     ->name('verification.verify');
 
-// Doğrulama e-postası yeniden gönderme
 Route::post('/email/verification-notification', [VerifyEmailController::class, 'send'])
     ->middleware(['auth'])
     ->name('verification.send');

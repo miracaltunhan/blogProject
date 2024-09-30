@@ -18,7 +18,7 @@ class BlogController extends Controller
         // Kategorileri ve alt kategorileri yükle
         $blogs = Blog::with(['category', 'category.subcategories', 'author'])->get();
 
-        return view('adminPanel.layout.blog', compact('blogs'));
+        return view('dashboard.index', compact('blogs'));
     }
 
 
