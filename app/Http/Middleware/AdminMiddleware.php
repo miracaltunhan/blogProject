@@ -15,7 +15,6 @@ class AdminMiddleware
     {
         // Kullanıcının rolünü kontrol et
         $user=Auth::user();
-        dd($user->hasRole());
         if ($user->hasRole('admin') || $user->hasRole('writer')) {
             return $next($request);
         }

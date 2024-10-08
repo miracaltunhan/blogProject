@@ -32,8 +32,6 @@ class MessageController extends Controller
      */
     public function send(Request $request)
     {
-        // Form verilerini logla
-        \Log::info('Form Data:', $request->all());
 
         $request->validate([
             'receiver_name' => 'required|exists:users,name',

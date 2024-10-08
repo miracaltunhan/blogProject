@@ -24,7 +24,6 @@ class CommentController extends Controller
 
         // Yorum oluştur
         try {
-            dd($request->all(),$request->content,$request->input(''));
             Comment::create([
                 'content' => $request->input('content'),
                 'user_id' => $userId,
